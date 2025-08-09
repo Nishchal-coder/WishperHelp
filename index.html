@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhisperHelp - WordPress Compatible</title>
+  <style>
+    /* WordPress Reset - Override theme conflicts */
+    .whisperhelp-app * {
+      box-sizing: border-box !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Container to isolate from WordPress theme */
+    .whisperhelp-app {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+      min-height: 100vh !important;
+      color: #333 !important;
+      position: relative !important;
+      z-index: 1 !important;
+      /* Override WordPress container constraints */
+      width: 100vw !important;
+      margin-left: calc(-50vw + 50%) !important;
+      margin-right: calc(-50vw + 50%) !important;
+      max-width: none !important;
+    }
+
+    .whisperhelp-app .app-container {
+      display: flex !important;
+      min-height: 100vh !important;
+      position: relative !important;
+    }
+
+    /* Sidebar Styles - WordPress Compatible */
+    .whisperhelp-app .sidebar {
+      width: 280px !important;
+      background: #f8fafc !important;
+      border-right: 1px solid #e2e8f0 !important;
+      padding: 0 !important;
+      flex-shrink: 0 !important;
+      position: relative !important;
+    }
+
+    .whisperhelp-app .sidebar-header {
+      padding: 24px !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+    }
+
+    .whisperhelp-app .logo {
+      width: 32px !important;
+      height: 32px !important;
+      background: linear-gradient(135deg, #8b5cf6, #a855f7) !important;
+      border-radius: 8px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: white !important;
+      font-weight: 700 !important;
+      font-size: 18px !important;
+      text-decoration: none !important;
+    }
+
+    .whisperhelp-app .sidebar-header h1 {
+      font-size: 20px !important;
+      font-weight: 700 !important;
+      color: #1e293b !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .whisperhelp-app .nav-menu {
+      padding: 16px 0 !important;
+    }
+
+    .whisperhelp-app .nav-item {
+      display: block !important;
+      padding: 12px 24px !important;
+      color: #64748b !important;
+      text-decoration: none !important;
+      font-weight: 500 !important;
+      transition: all 0.2s ease !important;
+      border: none !important;
+      background: none !important;
+      width: 100% !important;
+      text-align: left !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      font-family: inherit !important;
+      font-size: 14px !important;
+    }
+
+    .whisperhelp-app .nav-item:hover {
+      background: #f1f5f9 !important;
+      color: #475569 !important;
+      text-decoration: none !important;
+    }
+
+    .whisperhelp-app .nav-item.active {
+      background: #ede7f6 !important;
+      color: #8b5cf6 !important;
+      border-right: 3px solid #8b5cf6 !important;
+    }
+
+    .whisperhelp-app .nav-icon {
+      font-size: 18px !important;
+      width: 20px !important;
+    }
+
+    /* Main Content - WordPress Compatible */
+    .whisperhelp-app .main-content {
+      flex: 1 !important;
+      background: #f1f5f9 !important;
+      overflow-y: auto !important;
+      position: relative !important;
+    }
+
+    .whisperhelp-app .content-header {
+      background: white !important;
+      padding: 24px 32px !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+
+    .whisperhelp-app .welcome-text {
+      font-size: 24px !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .whisperhelp-app .greeting {
+      margin-bottom: 8px !important;
+      color: #64748b !important;
+      font-size: 16px !important;
+    }
+
+    .whisperhelp-app .user-avatar {
+      width: 40px !important;
+      height: 40px !important;
+      border-radius: 50% !important;
+      background: linear-gradient(135deg, #8b5cf6, #a855f7) !important;
+      margin-left: auto !important;
+    }
+
+    .whisperhelp-app .page-content {
+      padding: 32px !important;
+      max-width: 1200px !important;
+    }
+
+    .whisperhelp-app .page {
+      display: none !important;
+    }
+
+    .whisperhelp-app .page.active {
+      display: block !important;
+      animation: fadeIn 0.3s ease !important;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card Components - WordPress Safe */
+    .whisperhelp-app .mood-chart,
+    .whisperhelp-app .daily-checkin,
+    .whisperhelp-app .recent-conversations,
+    .whisperhelp-app .action-card,
+    .whisperhelp-app .resource-card,
+    .whisperhelp-app .chat-container {
+      background: white !important;
+      border-radius: 16px !important;
+      padding: 24px !important;
+      margin-bottom: 24px !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+      position: relative !important;
+    }
+
+    .whisperhelp-app .checkin-title,
+    .whisperhelp-app .section-title {
+      font-size: 18px !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+      margin-bottom: 20px !important;
+    }
+
+    .whisperhelp-app .mood-options {
+      display: flex !important;
+      gap: 16px !important;
+      margin-bottom: 24px !important;
+      justify-content: center !important;
+      flex-wrap: wrap !important;
+    }
+
+    .whisperhelp-app .mood-emoji {
+      font-size: 32px !important;
+      padding: 12px !important;
+      border-radius: 12px !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      border: 2px solid transparent !important;
+      background: transparent !important;
+      display: inline-block !important;
+    }
+
+    .whisperhelp-app .mood-emoji:hover {
+      background: #f8fafc !important;
+      transform: scale(1.1) !important;
+    }
+
+    .whisperhelp-app .mood-emoji.selected {
+      background: #ede7f6 !important;
+      border-color: #8b5cf6 !important;
+    }
+
+    .whisperhelp-app .complete-btn,
+    .whisperhelp-app .send-btn {
+      width: 100% !important;
+      background: linear-gradient(135deg, #8b5cf6, #a855f7) !important;
+      color: white !important;
+      border: none !important;
+      padding: 16px !important;
+      border-radius: 12px !important;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      font-family: inherit !important;
+    }
+
+    .whisperhelp-app .complete-btn:hover,
+    .whisperhelp-app .send-btn:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3) !important;
+    }
+
+    .whisperhelp-app .complete-btn:disabled {
+      opacity: 0.6 !important;
+      cursor: not-allowed !important;
+      transform: none !important;
+    }
+
+    /* Action Cards Grid */
+    .whisperhelp-app .action-cards {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 16px !important;
+    }
+
+    .whisperhelp-app .action-card {
+      text-align: center !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      border: none !important;
+      font-family: inherit !important;
+    }
+
+    .whisperhelp-app .action-card:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .whisperhelp-app .action-icon {
+      font-size: 32px !important;
+      margin-bottom: 12px !important;
+      display: block !important;
+    }
+
+    .whisperhelp-app .action-card h3 {
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+      margin: 0 !important;
+    }
+
+    /* Conversation Items */
+    .whisperhelp-app .conversation-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      padding: 12px 0 !important;
+      border-bottom: 1px solid #f1f5f9 !important;
+    }
+
+    .whisperhelp-app .conversation-item:last-child {
+      border-bottom: none !important;
+    }
+
+    .whisperhelp-app .conversation-dot {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 50% !important;
+      flex-shrink: 0 !important;
+    }
+
+    .whisperhelp-app .conversation-dot.green { background: #10b981 !important; }
+    .whisperhelp-app .conversation-dot.blue { background: #3b82f6 !important; }
+
+    .whisperhelp-app .conversation-details h4 {
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      color: #1e293b !important;
+      margin-bottom: 2px !important;
+    }
+
+    .whisperhelp-app .conversation-details p {
+      font-size: 12px !important;
+      color: #64748b !important;
+      margin: 0 !important;
+    }
+
+    /* Chart Placeholder */
+    .whisperhelp-app .mood-chart {
+      text-align: center !important;
+      height: 300px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: #64748b !important;
+      flex-direction: column !important;
+    }
+
+    .whisperhelp-app .mood-chart h3 {
+      font-size: 20px !important;
+      margin-bottom: 12px !important;
+      color: #1e293b !important;
+    }
+
+    .whisperhelp-app .mood-chart p {
+      font-size: 16px !important;
+      margin: 0 !important;
+    }
+
+    
+    .whisperhelp-app .chat-container {
+      background: white !important;
+      border-radius: 16px !important;
+      height: 600px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+    }
+
+    .whisperhelp-app .chat-header {
+      padding: 20px 24px !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      background: #f8fafc !important;
+      flex-shrink: 0 !important;
+    }
+
+    .whisperhelp-app .chat-title {
+      margin: 0 0 8px 0 !important;
+      font-size: 18px !important;
+      color: #1e293b !important;
+      font-weight: 600 !important;
+    }
+
+    .whisperhelp-app .chat-subtitle {
+      margin: 0 !important;
+      color: #64748b !important;
+      font-size: 14px !important;
+    }
+
+    .whisperhelp-app .chat-messages {
+      flex: 1 !important;
+      padding: 24px !important;
+      overflow-y: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 16px !important;
+      background: #ffffff !important;
+    }
+
+    .whisperhelp-app .message {
+      max-width: 70% !important;
+      padding: 12px 16px !important;
+      border-radius: 12px !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      word-wrap: break-word !important;
+      margin: 0 !important;
+    }
+
+    .whisperhelp-app .message.bot {
+      background: #f1f5f9 !important;
+      color: #334155 !important;
+      align-self: flex-start !important;
+      border-bottom-left-radius: 4px !important;
+    }
+
+    .whisperhelp-app .message.user {
+      background: #8b5cf6 !important;
+      color: white !important;
+      align-self: flex-end !important;
+      border-bottom-right-radius: 4px !important;
+    }
+
+    .whisperhelp-app .chat-input-container {
+      padding: 20px 24px !important;
+      border-top: 1px solid #e2e8f0 !important;
+      display: flex !important;
+      gap: 12px !important;
+      background: white !important;
+      flex-shrink: 0 !important;
+    }
+
+    .whisperhelp-app .chat-input-field {
+      flex: 1 !important;
+      padding: 12px 16px !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 8px !important;
+      font-size: 14px !important;
+      font-family: inherit !important;
+      outline: none !important;
+      transition: border-color 0.2s ease !important;
+    }
+
+    .whisperhelp-app .chat-input-field:focus {
+      border-color: #8b5cf6 !important;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
+    }
+
+    .whisperhelp-app .send-btn {
+      width: auto !important;
+      padding: 12px 20px !important;
+      font-size: 14px !important;
+      white-space: nowrap !important;
+    }
+
+    .whisperhelp-app .resource-card h3 {
+      color: #8b5cf6 !important;
+      margin-bottom: 12px !important;
+      font-size: 18px !important;
+      font-weight: 600 !important;
+    }
+
+    .whisperhelp-app .resource-card p {
+      color: #64748b !important;
+      line-height: 1.6 !important;
+      margin-bottom: 16px !important;
+    }
+
+    .whisperhelp-app .resource-link {
+      color: #8b5cf6 !important;
+      text-decoration: none !important;
+      font-weight: 500 !important;
+      font-size: 14px !important;
+    }
+
+    .whisperhelp-app .resource-link:hover {
+      text-decoration: underline !important;
+      color: #7c3aed !important;
+    }
+
+    /* Mobile Responsive - WordPress Compatible */
+    @media (max-width: 768px) {
+      .whisperhelp-app .app-container {
+        flex-direction: column !important;
+      }
+
+      .whisperhelp-app .sidebar {
+        width: 100% !important;
+        height: auto !important;
+      }
+
+      .whisperhelp-app .nav-menu {
+        display: flex !important;
+        overflow-x: auto !important;
+        padding: 0 !important;
+      }
+
+      .whisperhelp-app .nav-item {
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        padding: 16px !important;
+        min-width: 120px !important;
+      }
+
+      .whisperhelp-app .page-content {
+        padding: 16px !important;
+      }
+
+      .whisperhelp-app .action-cards {
+        grid-template-columns: 1fr !important;
+      }
+
+      .whisperhelp-app .mood-options {
+        gap: 8px !important;
+      }
+
+      .whisperhelp-app .content-header {
+        padding: 16px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+      }
+
+      .whisperhelp-app .user-avatar {
+        align-self: flex-end !important;
+        margin-top: 12px !important;
+      }
+    }
+
+    /* WordPress Admin Bar Compatibility */
+    @media screen and (max-width: 782px) {
+      .whisperhelp-app {
+        margin-top: 46px !important;
+      }
+    }
+
+    @media screen and (min-width: 783px) {
+      .whisperhelp-app {
+        margin-top: 32px !important;
+      }
+    }
+
+    /* Override WordPress theme button styles */
+    .whisperhelp-app button,
+    .whisperhelp-app .nav-item,
+    .whisperhelp-app .complete-btn,
+    .whisperhelp-app .send-btn,
+    .whisperhelp-app .action-card {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+    }
+
+    /* Override WordPress link styles */
+    .whisperhelp-app a,
+    .whisperhelp-app .nav-item,
+    .whisperhelp-app .resource-link {
+      text-decoration: none !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    /* Override WordPress form styles */
+    .whisperhelp-app input,
+    .whisperhelp-app button,
+    .whisperhelp-app select {
+      box-shadow: none !important;
+      outline: none !important;
+      border-radius: 8px !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="whisperhelp-app" id="whisperhelp-app">
+    <div class="app-container">
+      <!-- Sidebar -->
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">W</div>
+          <h1>WhisperHelp</h1>
+        </div>
+        <div class="nav-menu">
+          <button class="nav-item active" data-page="home">
+            <span class="nav-icon">🏠</span>
+            Home
+          </button>
+          <button class="nav-item" data-page="chat">
+            <span class="nav-icon">💬</span>
+            Chat
+          </button>
+          <button class="nav-item" data-page="mood">
+            <span class="nav-icon">❤️</span>
+            Mood Tracker
+          </button>
+          <button class="nav-item" data-page="resources">
+            <span class="nav-icon">📚</span>
+            Resources
+          </button>
+          <button class="nav-item" data-page="settings">
+            <span class="nav-icon">⚙️</span>
+            Settings
+          </button>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-header">
+          <div>
+            <div class="greeting">Good evening, Sarah</div>
+            <div class="welcome-text">How are you feeling today?</div>
+          </div>
+          <div class="user-avatar"></div>
+        </div>
+
+        <div class="page-content">
+          <!-- Home Page -->
+          <div id="home" class="page active">
+            <div class="daily-checkin">
+              <h3 class="checkin-title">Daily Check-in</h3>
+              <div class="mood-options">
+                <div class="mood-emoji" data-mood="happy">😊</div>
+                <div class="mood-emoji" data-mood="okay">😐</div>
+                <div class="mood-emoji" data-mood="worried">😟</div>
+                <div class="mood-emoji" data-mood="sad">😢</div>
+                <div class="mood-emoji" data-mood="anxious">😰</div>
+              </div>
+              <button class="complete-btn" disabled>Complete Check-in</button>
+            </div>
+
+            <div class="recent-conversations">
+              <h3 class="section-title">Recent Conversations</h3>
+              <div class="conversation-item">
+                <div class="conversation-dot green"></div>
+                <div class="conversation-details">
+                  <h4>Anxiety about work presentation</h4>
+                  <p>2 hours ago</p>
+                </div>
+              </div>
+              <div class="conversation-item">
+                <div class="conversation-dot blue"></div>
+                <div class="conversation-details">
+                  <h4>Sleep difficulties</h4>
+                  <p>Yesterday</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="action-cards">
+              <button class="action-card" data-page="chat">
+                <div class="action-icon">💬</div>
+                <h3>Start Chat</h3>
+              </button>
+              <button class="action-card" onclick="WhisperHelp.startBreathingExercise()">
+                <div class="action-icon">🫁</div>
+                <h3>Breathing Exercise</h3>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mood Tracker Page -->
+          <div id="mood" class="page">
+            <div class="mood-chart">
+              <div>
+                <h3>Mood Tracking Chart</h3>
+                <p>Your mood visualization will appear here</p>
+              </div>
+            </div>
+            
+            <div class="daily-checkin">
+              <h3 class="checkin-title">Log Today's Mood</h3>
+              <div class="mood-options">
+                <div class="mood-emoji" data-mood="excellent">😁</div>
+                <div class="mood-emoji" data-mood="good">😊</div>
+                <div class="mood-emoji" data-mood="okay">😐</div>
+                <div class="mood-emoji" data-mood="low">😔</div>
+                <div class="mood-emoji" data-mood="difficult">😢</div>
+              </div>
+              <button class="complete-btn" disabled>Log Mood</button>
+            </div>
+          </div>
+
+          <!-- Chat Page -->
+          <div id="chat" class="page">
+            <div class="chat-container">
+              <div class="chat-header">
+                <h3 class="chat-title">Chat with WhisperHelp</h3>
+                <p class="chat-subtitle">I'm here to listen and support you. How are you feeling?</p>
+              </div>
+              <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                  Hello! I'm here to provide support and listen to whatever is on your mind. How are you feeling today?
+                </div>
+              </div>
+              <div class="chat-input-container">
+                <input type="text" id="messageInput" class="chat-input-field" placeholder="Type your message here..." onkeypress="WhisperHelp.handleKeyPress(event)">
+                <button class="send-btn" onclick="WhisperHelp.sendMessage()">Send</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resources Page -->
+          <div id="resources" class="page">
+            <div class="resource-grid">
+              <div class="resource-card">
+                <h3>Crisis Support</h3>
+                <p>If you're in crisis, please reach out immediately to these resources:</p>
+                <a href="#" class="resource-link">Emergency Contacts →</a>
+              </div>
+              
+              <div class="resource-card">
+                <h3>Breathing Exercises</h3>
+                <p>Simple breathing techniques to help manage anxiety and stress.</p>
+                <a href="#" class="resource-link">Start Breathing →</a>
+              </div>
+              
+              <div class="resource-card">
+                <h3>Mindfulness Activities</h3>
+                <p>Guided meditation and mindfulness exercises for daily practice.</p>
+                <a href="#" class="resource-link">Explore Activities →</a>
+              </div>
+              
+              <div class="resource-card">
+                <h3>Professional Help</h3>
+                <p>Find qualified mental health professionals in your area.</p>
+                <a href="#" class="resource-link">Find Therapists →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings Page -->
+          <div id="settings" class="page">
+            <div class="daily-checkin">
+              <h3 class="checkin-title">Preferences</h3>
+              <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #1e293b;">Daily Check-in Reminder</label>
+                <input type="time" style="padding: 8px; border: 1px solid #e2e8f0; border-radius: 6px; font-family: inherit;">
+              </div>
+              <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #1e293b;">Privacy Settings</label>
+                <label style="display: flex; align-items: center; gap: 8px; color: #64748b;">
+                  <input type="checkbox" checked style="margin: 0;">
+                  <span>Allow anonymous data collection for app improvement</span>
+                </label>
+              </div>
+              <button class="complete-btn">Save Settings</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Namespace to avoid WordPress conflicts
+    window.WhisperHelp = {
+      init: function() {
+        this.bindEvents();
+        this.selectedMood = null;
+      },
+
+      bindEvents: function() {
+        const app = document.getElementById('whisperhelp-app');
+        if (!app) return;
+
+        // Navigation
+        const navItems = app.querySelectorAll('.nav-item');
+        const pages = app.querySelectorAll('.page');
+
+        navItems.forEach(item => {
+          item.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Remove active class
+            navItems.forEach(nav => nav.classList.remove('active'));
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Add active class
+            item.classList.add('active');
+            const targetPage = item.getAttribute('data-page');
+            const page = app.querySelector('#' + targetPage);
+            if (page) page.classList.add('active');
+          });
+        });
+
+        // Action card navigation
+        app.querySelectorAll('.action-card[data-page]').forEach(card => {
+          card.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetPage = card.getAttribute('data-page');
+            
+            navItems.forEach(nav => nav.classList.remove('active'));
+            pages.forEach(page => page.classList.remove('active'));
+            
+            const targetNav = app.querySelector(`[data-page="${targetPage}"]`);
+            const targetPageEl = app.querySelector('#' + targetPage);
+            
+            if (targetNav) targetNav.classList.add('active');
+            if (targetPageEl) targetPageEl.classList.add('active');
+          });
+        });
+
+        // Mood selection
+        app.querySelectorAll('.mood-emoji').forEach(emoji => {
+          emoji.addEventListener('click', (e) => {
+            e.preventDefault();
+            const container = emoji.closest('.daily-checkin, .page');
+            container.querySelectorAll('.mood-emoji').forEach(e => e.classList.remove('selected'));
+            
+            emoji.classList.add('selected');
+            this.selectedMood = emoji.getAttribute('data-mood');
+            
+            const completeBtn = container.querySelector('.complete-btn');
+            if (completeBtn) completeBtn.disabled = false;
+          });
+        });
+
+        // Complete buttons
+        app.querySelectorAll('.complete-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (this.selectedMood) {
+              alert(`Mood logged: ${this.selectedMood}. Thank you for checking in!`);
+              // Reset
+              app.querySelectorAll('.mood-emoji').forEach(e => e.classList.remove('selected'));
+              btn.disabled = true;
+              this.selectedMood = null;
+            } else if (btn.textContent.includes('Settings')) {
+              alert('Settings saved successfully!');
+            }
+          });
+        });
+      },
+
+      startBreathingExercise: function() {
+        alert('Starting guided breathing exercise...\n\nInhale slowly for 4 counts, hold for 4 counts, exhale for 6 counts. Repeat this cycle.');
+      },
+
+      // Chat functionality
+      sendMessage: function() {
+        const app = document.getElementById('whisperhelp-app');
+        const input = app.querySelector('#messageInput');
+        const message = input.value.trim();
+        
+        if (message) {
+          const chatMessages = app.querySelector('#chatMessages');
+          
+          // Add user message
+          const userMessage = document.createElement('div');
+          userMessage.className = 'message user';
+          userMessage.textContent = message;
+          chatMessages.appendChild(userMessage);
+          
+          // Scroll to bottom
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+          
+          // Clear input
+          input.value = '';
+          
+          // Simulate bot response after a delay
+          setTimeout(() => {
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot';
+            botMessage.textContent = "Thank you for sharing that with me. I'm here to listen and support you. Can you tell me more about how you're feeling?";
+            chatMessages.appendChild(botMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }, 1000);
+        }
+      },
+
+      handleKeyPress: function(event) {
+        if (event.key === 'Enter') {
+          this.sendMessage();
+        }
+      }
+    };
+
+    // Initialize when DOM is ready - WordPress compatible
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        WhisperHelp.init();
+      });
+    } else {
+      WhisperHelp.init();
+    }
+
+    // Reinitialize if WordPress uses AJAX (for theme compatibility)
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        if (window.WhisperHelp) {
+          WhisperHelp.init();
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>
